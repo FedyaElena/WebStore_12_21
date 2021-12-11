@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebStore.Models.Employee>
+﻿@model WebStore.Models.Employee
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 
     <body>
         <h3>
-            Employees
+            Employee card
         </h3>
         <table>
             <thead>
@@ -21,26 +21,24 @@
                     <th>Name</th>
                     <th>Patronymic</th>
                     <th>Age</th>
-                    <th>Employee card</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                @foreach(var employee in Model)
-            {
+             
                 <tr>
-                    <td>@employee.Id</td>
-                    <td>@employee.LastName</td>
-                    <td>@employee.FirstName</td>
-                    <td>@employee.Patronymic</td>
-                    <td>@employee.Age</td>
-                    <td>
-                        <a href="~/home/EmployeeCard/@employee.Id">EmployeeCard</a>
-                    </td>
+                    <td>@Model.Id</td>
+                    <td>@Model.LastName</td>
+                    <td>@Model.FirstName</td>
+                    <td>@Model.Patronymic</td>
+                    <td>@Model.Age</td>
+                    
                 </tr>
-            }
+           
         </tbody>
         </table>
         <hr/>
         <a href="~/">Home</a>
+        <a href="~/Home/employees">Employee list</a>
     </body>
 </html>

@@ -26,5 +26,19 @@ namespace WebStore.Controllers
         {
             return View(__Employees);
         }
+
+        public IActionResult EmployeeCard(string id)
+        {
+           foreach (var employee in __Employees)
+            {
+                if (employee.Id.ToString() == id)
+                {
+                    return View(employee);
+                }
+      
+            }
+            return View(1);
+
+        }
     }
 }
