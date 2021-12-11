@@ -21,6 +21,7 @@
                     <th>Name</th>
                     <th>Patronymic</th>
                     <th>Age</th>
+                    <th>Employee card</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,11 +33,14 @@
                     <td>@employee.FirstName</td>
                     <td>@employee.Patronymic</td>
                     <td>@employee.Age</td>
+                    <td>
+                        <a href="~/home/employee/@employee.Id"></a>
+                    </td>
                 </tr>
             }
         </tbody>
         </table>
         <hr/>
-        <a href="/">Home</a>
+        <a href="~/">Home</a>
     </body>
 </html>
