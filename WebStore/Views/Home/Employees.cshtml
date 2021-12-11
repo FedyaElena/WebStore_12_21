@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebStore.Models.Employee>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = "veiwport" content="width=device-width" />
+        <title>
+           Employees
+        </title>
+    </head>
+
+    <body>
+        <h3>
+            Employees
+        </h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Surname</th>
+                    <th>Name</th>
+                    <th>Patronymic</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var employee in Model)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.Patronymic</td>
+                    <td>@employee.Age</td>
+                </tr>
+            }
+        </tbody>
+        </table>
+        <hr/>
+        <a href="/">Home</a>
+    </body>
+</html>
