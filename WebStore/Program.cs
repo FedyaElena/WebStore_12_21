@@ -1,11 +1,22 @@
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+services.AddControllersWithViews();
+
 var app = builder.Build();
 
-// Загрузка информации из файла конфигурации
 
-//var configuration = app.Configuration;
-//var greetings = app.Configuration["CustomGreetings"];
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
-app.MapGet("/", () => app.Configuration["CustomGreetings"]);
+app.UseRouting();
+ 
+//app.MapGet("/", () => app.Configuration["CustomGreetings"]);
+app.MapGet("/throw", () =>
+{
+    throw new ApplicationException("Exception in program");
+});
 
+app.MapDefaultControllerRoute();
 app.Run();
