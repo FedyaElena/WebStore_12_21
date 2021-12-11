@@ -9,5 +9,10 @@ namespace WebStore.Controllers
            // return Content("Data from first controller");
            return View();
         }
+
+        public string ConfiguredAction(string id, string Value1)
+        {
+            return $"Hello World! {id} - {Value1}";
+        }
     }
 }
