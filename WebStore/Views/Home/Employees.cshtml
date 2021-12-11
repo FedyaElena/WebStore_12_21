@@ -1,27 +1,27 @@
-﻿@model IEnumerable<WebStore.Models.Employee>
+@model IEnumerable<WebStore.Models.Employee>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta name = "veiwport" content="width=device-width" />
         <title>
-           Employees
+           Сотрудники
         </title>
     </head>
 
     <body>
         <h3>
-            Employees
+            Сотрудники
         </h3>
         <table>
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Surname</th>
-                    <th>Name</th>
-                    <th>Patronymic</th>
-                    <th>Age</th>
-                    <th>Employee card</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Возраст</th>
+                    <th>Карточка сотрудника</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,13 +34,13 @@
                     <td>@employee.Patronymic</td>
                     <td>@employee.Age</td>
                     <td>
-                        <a href="~/home/EmployeeCard/@employee.Id">EmployeeCard</a>
+                        <a href="~/home/EmployeeCard/@employee.Id">Подробнее</a>
                     </td>
                 </tr>
             }
         </tbody>
         </table>
         <hr/>
-        <a href="~/">Home</a>
+        <a href="~/">На главную</a>
     </body>
 </html>
