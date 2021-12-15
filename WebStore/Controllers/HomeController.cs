@@ -37,7 +37,7 @@ namespace WebStore.Controllers
                 }
       
             }
-            return View(1);
+            return NotFound();
 
         }
     }
