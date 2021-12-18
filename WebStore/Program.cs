@@ -10,6 +10,8 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseStaticFiles(/*new StaticFileOptions { ServeUnknownFileTypes = true }*/);
+
 app.UseRouting();
  
 //app.MapGet("/", () => app.Configuration["CustomGreetings"]);

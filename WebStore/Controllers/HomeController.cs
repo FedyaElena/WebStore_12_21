@@ -1,44 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebStore.Models;
 
-namespace WebStore.Controllers
-{
+
+namespace WebStore.Controllers;
+
     public class HomeController : Controller
     {
-        private static readonly List<Employee> __Employees = new()
-        {
-            new Employee { Id = 1, LastName = "Ivanov", FirstName = "Ivan", Patronymic = "Ivanovich", Age = 23, EmploymentDate = new DateTime(2021,12,01) },
-            new Employee { Id = 2, LastName = "Petrov", FirstName = "Petr", Patronymic = "Petrovich", Age = 24, EmploymentDate = new DateTime(2019, 07, 09) },
-            new Employee { Id = 3, LastName = "Sidorov", FirstName = "Semen", Patronymic = "Semenovich", Age = 28, EmploymentDate = new DateTime(2020, 10, 11) },
-        };
+
         public IActionResult Index()
         {
            // return Content("Data from first controller");
            return View();
         }
 
-        public string ConfiguredAction(string id, string Value1)
-        {
-            return $"Hello World! {id} - {Value1}";
-        }
+     
 
-        public IActionResult Employees()
-        {
-            return View(__Employees);
-        }
+        //public IActionResult Employees()
+        //{
+        //    return View(__Employees);
+        //}
 
-        public IActionResult EmployeeCard(string id)
-        {
-           foreach (var employee in __Employees)
-            {
-                if (employee.Id.ToString() == id)
-                {
-                    return View(employee);
-                }
+        //public IActionResult EmployeeCard(string id)
+        //{
+        //   foreach (var employee in __Employees)
+        //    {
+        //        if (employee.Id.ToString() == id)
+        //        {
+        //            return View(employee);
+        //        }
       
-            }
-            return NotFound();
+        //    }
+        //    return NotFound();
 
-        }
-    }
+        //}
+    
 }
