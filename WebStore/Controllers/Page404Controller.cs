@@ -2,7 +2,7 @@
 
 namespace WebStore.Controllers
 {
-    public class BlogsController : Controller
+    public class Page404 : Controller
     {
         public IActionResult Index()
         {
@@ -13,7 +13,5 @@ namespace WebStore.Controllers
         {
             return View();
         }
-
-
     }
 }
