@@ -12,7 +12,7 @@ namespace WebStore.Controllers;
            return View();
         }
 
-     
+        public void Throw(string Message) => throw new ApplicationException(Message);
 
         //public IActionResult Employees()
         //{

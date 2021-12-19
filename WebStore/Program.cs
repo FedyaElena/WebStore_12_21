@@ -28,7 +28,8 @@ app.UseRouting();
 app.UseMiddleware<TestMiddleware>();
 
 app.UseWelcomePage("/welcome");
- 
+
+ //app.MapDefaultControllerRoute();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
