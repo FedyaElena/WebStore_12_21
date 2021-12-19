@@ -2,6 +2,7 @@
 using WebStore.Data;
 using WebStore.Models;
 using WebStore.ViewModels;
+using WebStore.Services.Interfaces;
 
 namespace WebStore.Controllers
 {
@@ -9,22 +10,24 @@ namespace WebStore.Controllers
     //[Route("Staff/[action]/{Id?}")]
     public class EmployeesController : Controller
     {
-        private readonly ICollection<Employee> __Employees;
-        public EmployeesController()
+        //private readonly ICollection<Employee> __Employees;
+        private readonly IEmployeeData _EmployeesData;
+        public EmployeesController(IEmployeeData EmployeesData)
         {
-            __Employees = TestData.Employees;
+            _EmployeesData = EmployeesData;
         }
 
         public IActionResult Index()
         {
-            var result = __Employees;
+            var result = _EmployeesData.GetAll();
             return View(result);
         }
         //[Route("~/employees/info-{id}")]
         public IActionResult Details(int Id)
         {
-            ViewData["TestValue"] = 123;            
-            var employee = __Employees.FirstOrDefault(e => e.Id == Id);
+            //ViewData["TestValue"] = 123;            
+            //var employee = __Employees.FirstOrDefault(e => e.Id == Id);
+            var employee = _EmployeesData.GetById(Id);
 
             if (employee == null)
                 return NotFound();
@@ -37,7 +40,7 @@ namespace WebStore.Controllers
         //public IActionResult Create() => View();
         public IActionResult Edit(int id)
         {
-            var employee = __Employees.FirstOrDefault(e => e.Id == id);
+            var employee = _EmployeesData.GetById(id);
             if (employee == null)
                 return NotFound();
 
@@ -54,9 +57,21 @@ namespace WebStore.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
-            //обработка модели
+            var employee = new Employee
+            {
+                Id = Model.Id,
+                FirstName = Model.FirstName,
+                LastName = Model.LastName,
+                Age = Model.Age,
+                EmploymentDate = Model.EmploymentDate,
+                Patronymic = Model.Patronymic,
+            };
+
+            if(!_EmployeesData.Edit(employee))
+                return NotFound();
 
             return RedirectToAction("Index");
         }
