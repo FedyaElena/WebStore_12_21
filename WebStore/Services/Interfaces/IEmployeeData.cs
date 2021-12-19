@@ -5,7 +5,7 @@ namespace WebStore.Services.Interfaces
     public interface IEmployeeData
     {
         IEnumerable<Employee> GetAll();
-        Employee? GetEmployee(int id);
+        Employee? GetById(int id);
 
         int Add(Employee employee);
         bool Edit(Employee employee);
