@@ -32,5 +32,12 @@ namespace WebStore.Controllers
 
             return View(employee);
         }
+
+        public IActionResult Create() => View();
+        public IActionResult Edit(int id) => View();
+        public IActionResult Delete(int id) => View();
+
+
+
     }
 }
