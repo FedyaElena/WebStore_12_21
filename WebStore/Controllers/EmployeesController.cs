@@ -12,9 +12,11 @@ namespace WebStore.Controllers
     {
         //private readonly ICollection<Employee> __Employees;
         private readonly IEmployeeData _EmployeesData;
-        public EmployeesController(IEmployeeData EmployeesData)
+        private readonly ILogger<EmployeesController> _Logger;
+        public EmployeesController(IEmployeeData EmployeesData, ILogger<EmployeesController> Logger)
         {
             _EmployeesData = EmployeesData;
+            _Logger = Logger;
         }
 
         public IActionResult Index()
@@ -37,12 +39,18 @@ namespace WebStore.Controllers
             return View(employee);
         }
 
-        //public IActionResult Create() => View();
-        public IActionResult Edit(int id)
+        public IActionResult Create() => View("Edit", new EmployeeEditViewModel());
+        public IActionResult Edit(int? id)
         {
-            var employee = _EmployeesData.GetById(id);
+            if (id == null)
+                return View(new EmployeeEditViewModel());
+            var employee = _EmployeesData.GetById((int)id);
             if (employee == null)
+            {
+                _Logger.LogWarning("При редактировании сотрудника с id:{0} он не был найден", id);
                 return NotFound();
+            }
+               
 
             var model = new EmployeeEditViewModel
             {
@@ -70,8 +78,19 @@ namespace WebStore.Controllers
                 Patronymic = Model.Patronymic,
             };
 
-            if(!_EmployeesData.Edit(employee))
+            if(Model.Id == 0)
+            {
+               
+                _EmployeesData.Add(employee);
+                _Logger.LogInformation("Создание нового сотрудника {0}", employee);
+            }
+               
+            else if (!_EmployeesData.Edit(employee))
+            {
+                _Logger.LogInformation("Информация о сотруднике {0} изменена", employee);
                 return NotFound();
+            }
+                
 
             return RedirectToAction("Index");
         }
@@ -92,6 +111,8 @@ namespace WebStore.Controllers
                 Age = employee.Age,
                 EmploymentDate = employee.EmploymentDate,
             };
+
+            
             return View(model);
 
 
@@ -101,6 +122,9 @@ namespace WebStore.Controllers
         {
             if (!_EmployeesData.Delete(id))
                 return NotFound();
+
+            _Logger.LogInformation("Сотрудник с id {0} удален", id);
+
             return RedirectToAction("Index");
         }
 
