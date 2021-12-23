@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebStore.ViewModels;
 
 
-public class EmployeeEditViewModel
+public class EmployeeEditViewModel : IValidatableObject
 {
     [HiddenInput(DisplayValue = false)]
     public int Id { get; set; }
@@ -31,4 +31,12 @@ public class EmployeeEditViewModel
 
     [Display(Name = "Дата приема на работу")]
     public DateTime EmploymentDate { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext Context) 
+    {
+        if (LastName.Length > 100)
+            yield return new ValidationResult("Длина фамилии больше 100 символов");
+
+        yield return ValidationResult.Success;
+    }
 }
