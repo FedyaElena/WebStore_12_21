@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Удаление сотрудника Id:";
+    Layout = "_LayoutContainer";
 }
 
 
-<div class ='container'>
+
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Сотрудник @Model.FirstName @Model.LastName</h4>
@@ -16,4 +17,4 @@
         <a asp-action="Index">Отмена</a>
     </form>
 </div>
-</div>
+

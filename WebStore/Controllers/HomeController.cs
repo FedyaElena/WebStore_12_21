@@ -27,23 +27,6 @@ namespace WebStore.Controllers;
 
         public void Throw(string Message) => throw new ApplicationException(Message);
 
-        //public IActionResult Employees()
-        //{
-        //    return View(__Employees);
-        //}
-
-        //public IActionResult EmployeeCard(string id)
-        //{
-        //   foreach (var employee in __Employees)
-        //    {
-        //        if (employee.Id.ToString() == id)
-        //        {
-        //            return View(employee);
-        //        }
-      
-        //    }
-        //    return NotFound();
-
-        //}
+    public IActionResult Error404() => View();
     
 }
