@@ -13,6 +13,8 @@ services.AddControllersWithViews(opt =>
     
     );
 services.AddSingleton<IEmployeeData, InMemoryEmployeesData>();
+services.AddSingleton<IProductData, InMemoryProductData>();
+
 
 var app = builder.Build();
 

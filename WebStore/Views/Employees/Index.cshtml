@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Список сотрудников";
+    Layout = "_LayoutContainer";
 }
 
-<div class="container">
+
         <h3>
             Сотрудники
         </h3>
@@ -18,12 +19,12 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Id</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
-                    <th>Возраст</th>
-                    <th>Карточка сотрудника</th>
+                    <th>@Html.DisplayNameFor(m => m.Id)</th>
+                    <th>@Html.DisplayNameFor(m => m.LastName)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstName)</th>
+                    <th>@Html.DisplayNameFor(m => m.Patronymic)</th>
+                    <th>@Html.DisplayNameFor(m => m.Age)</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -64,4 +65,4 @@
     }
     <hr/>
         <a asp-controller="Home" asp-action="Index">На главную</a>
-        </div>
+       
