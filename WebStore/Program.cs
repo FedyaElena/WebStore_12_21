@@ -1,7 +1,9 @@
 using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
+using WebStore.DAL.Context;
 using WebStore.Services;
 using WebStore.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -9,9 +11,11 @@ var services = builder.Services;
 services.AddControllersWithViews(opt =>
 {
     opt.Conventions.Add(new TestConvention());
-}
-    
-    );
+});
+
+services.AddDbContext<WebStoreDB>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
+
 services.AddSingleton<IEmployeeData, InMemoryEmployeesData>();
 services.AddSingleton<IProductData, InMemoryProductData>();
 
