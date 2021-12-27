@@ -2,7 +2,7 @@
 using WebStore.Services.Interfaces;
 using WebStore.Data;
 
-namespace WebStore.Services;
+namespace WebStore.Services.InMemory;
 public class InMemoryEmployeesData : IEmployeeData
 {
     private readonly ILogger<InMemoryEmployeesData> _Logger;
