@@ -15,7 +15,7 @@ services.AddControllersWithViews(opt =>
 
 services.AddDbContext<WebStoreDB>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
-
+services.AddTransient<IDbInitializer, DbInitializer>();
 services.AddSingleton<IEmployeeData, InMemoryEmployeesData>();
 services.AddSingleton<IProductData, InMemoryProductData>();
 
@@ -42,4 +42,11 @@ app.UseWelcomePage("/welcome");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await db_initializer.InitializeAsync(RemoveBefore: false);
+}
+
 app.Run();

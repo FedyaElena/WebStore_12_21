@@ -64,7 +64,7 @@ public class DbInitializer : IDbInitializer
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Sections] ON", Cancel);
             await _db.SaveChangesAsync(Cancel);
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Sections] OFF", Cancel);
-
+            await _db.Database.CommitTransactionAsync(Cancel);
         }
         _logger.LogInformation("Добавление брендов в БД ...");
         await using (await _db.Database.BeginTransactionAsync(Cancel))
@@ -73,7 +73,7 @@ public class DbInitializer : IDbInitializer
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Brands] ON", Cancel);
             await _db.SaveChangesAsync(Cancel);
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Brands] OFF", Cancel);
-
+            await _db.Database.CommitTransactionAsync(Cancel);
         }
         _logger.LogInformation("Добавление продуктов в БД ...");
         await using (await _db.Database.BeginTransactionAsync(Cancel))
@@ -82,7 +82,7 @@ public class DbInitializer : IDbInitializer
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON", Cancel);
             await _db.SaveChangesAsync(Cancel);
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", Cancel);
-
+            await _db.Database.CommitTransactionAsync(Cancel);
         }
 
         _logger.LogInformation("Инициализация данных БД выполнена успешно");
