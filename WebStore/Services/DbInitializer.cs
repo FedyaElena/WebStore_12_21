@@ -1,4 +1,5 @@
-﻿using WebStore.Models;
+﻿//using WebStore.Models;
+using WebStore.Domain.Entities;
 using WebStore.DAL.Context;
 using WebStore.Services.Interfaces;
 using WebStore.Data;
@@ -82,6 +83,18 @@ public class DbInitializer : IDbInitializer
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] ON", Cancel);
             await _db.SaveChangesAsync(Cancel);
             await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Products] OFF", Cancel);
+            await _db.Database.CommitTransactionAsync(Cancel);
+        }
+
+        
+
+        _logger.LogInformation("Добавление сотрудников в БД ...");
+        await using (await _db.Database.BeginTransactionAsync(Cancel))
+        {
+            await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
+            await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] ON", Cancel);
+            await _db.SaveChangesAsync(Cancel);
+            await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] OFF", Cancel);
             await _db.Database.CommitTransactionAsync(Cancel);
         }
 

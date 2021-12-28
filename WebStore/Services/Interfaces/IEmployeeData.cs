@@ -1,10 +1,10 @@
-﻿using WebStore.Models;
+﻿using WebStore.Domain.Entities;
 
 namespace WebStore.Services.Interfaces
 {
     public interface IEmployeeData
     {
-        IEnumerable<Employee> GetAll();
+        IEnumerable<Employee> GetEmployees();
         Employee? GetById(int id);
 
         int Add(Employee employee);

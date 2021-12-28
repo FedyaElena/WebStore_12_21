@@ -2,8 +2,9 @@ using WebStore.Infrastructure.Conventions;
 using WebStore.Infrastructure.Middleware;
 using WebStore.DAL.Context;
 using WebStore.Services;
-using WebStore.Services.InMemory;
+//using WebStore.Services.InMemory;
 using WebStore.Services.Interfaces;
+using WebStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using WebStore.Services.InSQL;
 
@@ -18,9 +19,10 @@ services.AddControllersWithViews(opt =>
 services.AddDbContext<WebStoreDB>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")));
 services.AddTransient<IDbInitializer, DbInitializer>();
-services.AddSingleton<IEmployeeData, InMemoryEmployeesData>();
+//services.AddSingleton<IEmployeeData, InMemoryEmployeesData>();
 //services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SQLProductData>();
+services.AddScoped<IEmployeeData, SQLEmployeesData>();
 
 
 var app = builder.Build();
@@ -49,7 +51,7 @@ app.MapControllerRoute(
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var db_initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    await db_initializer.InitializeAsync(RemoveBefore: false);
+    await db_initializer.InitializeAsync(RemoveBefore: true);
 }
 
 app.Run();
