@@ -11,7 +11,7 @@ using WebStore.Domain;
 using System.Data;
 using System.Data.SqlClient;
 using WebStore.DAL.Context;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace WebStore.Services.InSQL;
 
