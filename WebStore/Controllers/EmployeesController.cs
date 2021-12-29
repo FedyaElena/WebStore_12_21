@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebStore.Data;
-using WebStore.Models;
+using WebStore.Domain.Entities;
 using WebStore.ViewModels;
 using WebStore.Services.Interfaces;
 
@@ -21,7 +21,7 @@ namespace WebStore.Controllers
 
         public IActionResult Index()
         {
-            var result = _EmployeesData.GetAll();
+            var result = _EmployeesData.GetEmployees();
             return View(result);
         }
         //[Route("~/employees/info-{id}")]

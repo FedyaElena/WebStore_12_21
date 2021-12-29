@@ -1,14 +1,14 @@
-﻿using WebStore.Models;
+﻿//using WebStore.Models;
 using WebStore.Domain.Entities;
 namespace WebStore.Data;
 
 public static class TestData
 {
-   public static List<Employee> Employees { get; } = new()
+   public static IEnumerable<Employee> Employees { get; } = new[]
        {
-           new Employee { Id = 1, LastName = "Ivanov", FirstName = "Ivan", Patronymic = "Ivanovich", Age = 23, EmploymentDate = new DateTime(2021, 12, 01) },
-           new Employee { Id = 2, LastName = "Petrov", FirstName = "Petr", Patronymic = "Petrovich", Age = 24, EmploymentDate = new DateTime(2019, 07, 09) },
-           new Employee { Id = 3, LastName = "Sidorov", FirstName = "Semen", Patronymic = "Semenovich", Age = 28, EmploymentDate = new DateTime(2020, 10, 11) },
+           new Employee { Id = 1, Name = "Ivanov Ivan Ivanovich", LastName = "Ivanov", FirstName = "Ivan", Patronymic = "Ivanovich", Age = 23, EmploymentDate = new DateTime(2021, 12, 01) },
+           new Employee { Id = 2, Name = "Petrov Petr Petrovich", LastName = "Petrov", FirstName = "Petr", Patronymic = "Petrovich", Age = 24, EmploymentDate = new DateTime(2019, 07, 09) },
+           new Employee { Id = 3, Name = "Sidorov Semen Semenovich", LastName = "Sidorov", FirstName = "Semen", Patronymic = "Semenovich", Age = 28, EmploymentDate = new DateTime(2020, 10, 11) },
        };
     public static IEnumerable<Section> Sections { get; } = new[]
     {
@@ -19,7 +19,7 @@ public static class TestData
         new Section { Id = 5, Name = "Puma", Order = 3, ParentId = 1},
         new Section { Id = 6, Name = "ASICS", Order = 4, ParentId = 1},
         new Section { Id = 7, Name = "Для мужчин", Order = 1},
-        new Section { Id = 8, Name = "Fendi", Order = 0, ParentId = 7},
+        new Section { Id = 8, Name = "Fendi2", Order = 0, ParentId = 7},
         new Section { Id = 9, Name = "Guess", Order = 1, ParentId = 7},
         new Section { Id = 10, Name = "Valentino", Order = 2, ParentId = 7},
         new Section { Id = 11, Name = "Диор", Order = 3, ParentId = 7},
@@ -31,8 +31,8 @@ public static class TestData
         new Section { Id = 17, Name = "Гуччи", Order = 9, ParentId = 7},
         new Section { Id = 18, Name = "Для женщин", Order = 2},
         new Section { Id = 19, Name = "Fendi", Order = 0, ParentId = 18},
-        new Section { Id = 20, Name = "Guess", Order = 1, ParentId = 18},
-        new Section { Id = 21, Name = "Valentino", Order = 2, ParentId = 18},
+        new Section { Id = 20, Name = "Guess2", Order = 1, ParentId = 18},
+        new Section { Id = 21, Name = "Valentino2", Order = 2, ParentId = 18},
         new Section { Id = 22, Name = "Dior", Order = 3, ParentId = 18},
         new Section { Id = 23, Name = "Versace", Order = 4, ParentId = 18},
         new Section { Id = 24, Name = "Для детей", Order = 3},
