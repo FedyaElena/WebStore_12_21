@@ -21,17 +21,18 @@ public class SQLEmployeesData : IEmployeeData
     private readonly ILogger<SQLEmployeesData> _Logger;
     
     //public static SqlConnection conn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebStoreFedyanina.db;");
-    public SQLEmployeesData(WebStoreDB db) => _db = db;
+    public SQLEmployeesData(WebStoreDB db, ILogger<SQLEmployeesData> Logger) => _db = db;
 
    
-    public IEnumerable<Employee> GetEmployees() => _db.Employees;
-    private int? employeeIdMax => _db.Employees.DefaultIfEmpty().Max(e => e.Id);
-    private int _MaxFreeId => employeeIdMax == null ? 0 : (int)employeeIdMax + 1;
-    public Employee? GetById(int id) => _db.Employees.FirstOrDefault(employee => employee.Id == id);
+    public IEnumerable<Employee> GetEmployees() => _db.Employees.AsEnumerable();
+    //private int? employeeIdMax => _db.Employees.DefaultIfEmpty().Max(e => e.Id);
+    //private int _MaxFreeId => employeeIdMax == null ? 0 : (int)employeeIdMax + 1;
+    //public Employee? GetById(int id) => _db.Employees.FirstOrDefault(employee => employee.Id == id);
+    public Employee? GetById(int id) => _db.Employees.Find(id);
 
     //private async Task InitializeEmployeeAsync(CancellationToken Cancel)
     //{
-       
+
     //    _Logger.LogInformation("Добавление сотрудника в БД ...");
     //    await using (await _db.Database.BeginTransactionAsync(Cancel))
     //    {
@@ -43,17 +44,17 @@ public class SQLEmployeesData : IEmployeeData
     //    }
     //    _Logger.LogInformation("Добавлен сотрудник в БД ...");
     //}
-        public int Add(Employee employee)
+    public int Add(Employee employee)
     {
-        if (employee is null)
-            throw new ArgumentNullException(nameof(employee));
+        //if (employee is null)
+        //    throw new ArgumentNullException(nameof(employee));
 
-        if (_db.Employees.Contains(employee))
-            return employee.Id;
-        employee.Id = _MaxFreeId;
-        _db.Employees.Add(employee);
+        //if (_db.Employees.Contains(employee))
+        //    return employee.Id;
+        ////employee.Id = _MaxFreeId;
+        //_db.Employees.Add(employee);
 
-        
+
         //if (conn.State == ConnectionState.Closed)
         //{
         //    conn.Open();
@@ -84,39 +85,55 @@ public class SQLEmployeesData : IEmployeeData
         //conn.Close();
 
 
+
+        _db.Entry(employee).State = EntityState.Added;
+        _db.SaveChanges();
         return employee.Id;
+
     }
 
     public bool Edit(Employee employee)
     {
-        if (employee == null)
-            throw new ArgumentNullException(nameof(employee));
-        if (_db.Employees.Contains(employee))
-            return true;
-        var db_employee = GetById(employee.Id);
-        if (db_employee == null)
-        {
-            _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с Id:{0}", employee.Id);
-            return false;
-        }
+        //if (employee == null)
+        //    throw new ArgumentNullException(nameof(employee));
+        //if (_db.Employees.Contains(employee))
+        //    return true;
+        //var db_employee = GetById(employee.Id);
+        //if (db_employee == null)
+        //{
+        //    _Logger.LogWarning("Попытка редактирования отсутствующего сотрудника с Id:{0}", employee.Id);
+        //    return false;
+        //}
 
-        db_employee.FirstName = employee.FirstName;
-        db_employee.LastName = employee.LastName;
-        db_employee.Age = employee.Age;
-        db_employee.Patronymic = employee.Patronymic;
-        db_employee.EmploymentDate = employee.EmploymentDate;
+        //db_employee.FirstName = employee.FirstName;
+        //db_employee.LastName = employee.LastName;
+        //db_employee.Age = employee.Age;
+        //db_employee.Patronymic = employee.Patronymic;
+        //db_employee.EmploymentDate = employee.EmploymentDate;
 
-        _Logger.LogInformation("Информация о сотруднике с Id:{0} была изменена", employee.Id);
-        
+        //_Logger.LogInformation("Информация о сотруднике с Id:{0} была изменена", employee.Id);
 
 
-        return true;
+
+        //return true;
+
+        //_db.Entry(employee).State = EntityState.Modified;
+        //_db.Update(employee);
+        _db.Employees.Update(employee);
+        return _db.SaveChanges() != 0;
+         
     }
 
 
     public bool Delete(int id)
     {
-        var employee = GetById(id);
+        //var employee = GetById(id);
+        var employee = _db.Employees.Select(
+            e => new Employee
+            {
+                Id = e.Id,
+            }
+            ).FirstOrDefault(e => e.Id == id); //неполная проекция для экономии памяти и времени
         if (employee == null)
         {
             _Logger.LogWarning("Попытка удаления отсутствующего сотрудника с Id:{0}", id);
@@ -124,6 +141,11 @@ public class SQLEmployeesData : IEmployeeData
         }
 
         _db.Employees.Remove(employee);
+
+        //_db.Entry(employee).State = EntityState.Deleted;
+       // _db.Remove(employee);
+      
+        _db.SaveChanges();
         //_Logger.LogInformation("Cотрудник с Id:{0} был удален", id);
         return true;
     }
