@@ -46,6 +46,7 @@ public class DbInitializer : IDbInitializer
        
 
         await InitializeProductsAsync(Cancel).ConfigureAwait(false);
+        await InitializeEmployeesAsync(Cancel).ConfigureAwait(false);
         _logger.LogInformation("Инициализация БД выполнена успешно");
     }
 
@@ -88,15 +89,28 @@ public class DbInitializer : IDbInitializer
 
         
 
-        _logger.LogInformation("Добавление сотрудников в БД ...");
-        await using (await _db.Database.BeginTransactionAsync(Cancel))
+       
+    }
+
+    private async Task InitializeEmployeesAsync(CancellationToken Cancel)
+    {
+        if (await _db.Employees.AnyAsync(Cancel))
         {
-            await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
-            await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] ON", Cancel);
-            await _db.SaveChangesAsync(Cancel);
-            await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] OFF", Cancel);
-            await _db.Database.CommitTransactionAsync(Cancel);
+           _logger.LogInformation("Добавление сотрудников в БД не требуется");
+            return;
         }
+            
+        _logger.LogInformation("Добавление сотрудников в БД ...");
+        await using var transaction = await _db.Database.BeginTransactionAsync(Cancel);
+        //await using (await _db.Database.BeginTransactionAsync(Cancel))
+        //{
+            await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
+            //await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] ON", Cancel);
+            await _db.SaveChangesAsync(Cancel);
+            //await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] OFF", Cancel);
+            //await _db.Database.CommitTransactionAsync(Cancel);
+            await transaction.CommitAsync(Cancel);
+        //}
 
         _logger.LogInformation("Инициализация данных БД выполнена успешно");
     }
