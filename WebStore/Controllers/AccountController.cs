@@ -5,6 +5,11 @@ namespace WebStore.Controllers;
     public class AccountController : Controller
     {
     public IActionResult Login() => View();
+
+    public async Task<IActionResult> Register()
+    {
+
+    }
     public IActionResult Logout() => RedirectToAction("Index", "Home");
     public IActionResult Register() => View();
     public IActionResult AccessDenied() => View();
