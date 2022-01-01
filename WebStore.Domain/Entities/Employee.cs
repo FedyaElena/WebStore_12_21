@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebStore.Domain.Entities;
 [Index(nameof(LastName), IsUnique = true)]
-public class Employee : NamedEntity, INamedEntity
+public class Employee : Entity
 {
     //public int Id { get; set; }
     public string LastName { get; set; }
