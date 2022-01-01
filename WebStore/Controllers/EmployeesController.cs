@@ -27,7 +27,7 @@ namespace WebStore.Controllers
             return View(result);
         }
         //[Route("~/employees/info-{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Details(int Id)
         {
             //ViewData["TestValue"] = 123;            
@@ -41,9 +41,9 @@ namespace WebStore.Controllers
 
             return View(employee);
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create() => View("Edit", new EmployeeEditViewModel());
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,7 +68,7 @@ namespace WebStore.Controllers
 
             return View(model);
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
@@ -104,7 +104,7 @@ namespace WebStore.Controllers
 
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             if(id<0)
@@ -128,7 +128,7 @@ namespace WebStore.Controllers
 
 
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {

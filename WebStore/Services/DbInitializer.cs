@@ -104,6 +104,7 @@ public class DbInitializer : IDbInitializer
         await using var transaction = await _db.Database.BeginTransactionAsync(Cancel);
         //await using (await _db.Database.BeginTransactionAsync(Cancel))
         //{
+        TestData.Employees.ForEach(employee => employee.Id = 0); 
             await _db.Employees.AddRangeAsync(TestData.Employees, Cancel);
             //await _db.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[Employees] ON", Cancel);
             await _db.SaveChangesAsync(Cancel);
