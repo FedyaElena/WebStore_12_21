@@ -7,10 +7,10 @@
 	<section id="form"><!--form-->
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4 col-sm-offset-1">
+				<div class="col-sm-4">
 					<div class="login-form"><!--login form-->
 						<h2>Вход в аккаунт</h2>
-						<form asp-action="Login" asp-route-ReturnURL="@Model!.ReturnUrl">
+						<form asp-action="Login" asp-route-ReturnURL="@Model!.ReturnUrl" asp-antiforgery="true">
 							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 							
 							<input asp-for="UserName" placeholder="Логин" />
