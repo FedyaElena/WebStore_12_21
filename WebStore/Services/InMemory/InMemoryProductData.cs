@@ -1,11 +1,10 @@
-﻿using WebStore.Models;
-using WebStore.Services.Interfaces;
+﻿using WebStore.Services.Interfaces;
 using WebStore.Domain.Entities;
 using WebStore.Data;
 using WebStore.Domain;
 
 namespace WebStore.Services.InMemory;
-[Obsolete("Используйте класс WebStore.Services.InSQL.SQLProductData")]
+[Obsolete("Используйте класс WebStore.Services.InSQL.SQLProductData", error: true)]
 public class InMemoryProductData : IProductData
 {
     public IEnumerable<Section> GetSections() => TestData.Sections;
