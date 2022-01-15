@@ -4,12 +4,13 @@ using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.ViewModels;
 using WebStore.Services.Interfaces;
+using WebStore.Domain.Entities.Identity;
 
 namespace WebStore.Controllers
 {
     //[Route("empl/[action]/{Id?}")]
     //[Route("Staff/[action]/{Id?}")]
-    //[Authorize]
+    [Authorize]
     public class EmployeesController : Controller
     {
         //private readonly ICollection<Employee> __Employees;
@@ -43,7 +44,7 @@ namespace WebStore.Controllers
         }
         //[Authorize(Roles = "Admin")]
         public IActionResult Create() => View("Edit", new EmployeeEditViewModel());
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,7 +69,7 @@ namespace WebStore.Controllers
 
             return View(model);
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrators)]
         [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel Model)
         {
@@ -104,7 +105,7 @@ namespace WebStore.Controllers
 
             return RedirectToAction("Index");
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrators)]
         public IActionResult Delete(int id)
         {
             if(id<0)
@@ -128,7 +129,7 @@ namespace WebStore.Controllers
 
 
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = Role.Administrators)]
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
