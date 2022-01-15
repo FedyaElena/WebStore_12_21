@@ -20,7 +20,9 @@ public class SQLProductData : IProductData
 
     public IEnumerable<Product> GetProducts(ProductFilter? Filter = null)
     {
-       IQueryable<Product> query = _db.Products;
+       IQueryable<Product> query = _db.Products
+        .Include(p => p.Section)
+        .Include(p => p.Brand);
 
         if (Filter?.Ids?.Length >0)
         {

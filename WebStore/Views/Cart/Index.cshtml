@@ -1,3 +1,5 @@
+@using WebStore.ViewModels
+@model CartViewModel
 @{
     ViewBag.Title = "Корзина";
 }
@@ -25,82 +27,35 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						@foreach(var (product, quantity) in Model.Items)
+						{
+							<tr>
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img src="~/images/shop/@product.ImageUrl" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Артикул: 1089772</p>
+								<h4><a href="">@product.Name</a></h4>
+								<p>Артикул: @product.Id.ToString("0000000")</p>
 							</td>
 							<td class="cart_price">
-								<p>$59</p>
+								<p>@product.Price.ToString("C")</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
+									<a class="cart_quantity_up" asp-controller="Cart" asp-action="Add" asp-route-Id="@product.Id"> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="@quantity" autocomplete="off" size="2">
+									<a  class="cart_quantity_down" asp-controller="Cart" asp-action="Decrement" asp-route-Id="@product.Id"> - </a>
 								</div>
 							</td>
 							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
+								<p class="cart_total_price">@(product.Price * quantity)</p>
 							</td>
 							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+								<a class="cart_quantity_delete" asp-controller="Cart" asp-action="Remove" asp-route-Id="@product.Id"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
-
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/two.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Артикул: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-						<tr>
-							<td class="cart_product">
-								<a href=""><img src="images/cart/three.png" alt=""></a>
-							</td>
-							<td class="cart_description">
-								<h4><a href="">Colorblock Scuba</a></h4>
-								<p>Артикул: 1089772</p>
-							</td>
-							<td class="cart_price">
-								<p>$59</p>
-							</td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
-								</div>
-							</td>
-							<td class="cart_total">
-								<p class="cart_total_price">$59</p>
-							</td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
+						}
+						
 					</tbody>
 				</table>
 			</div>
@@ -171,10 +126,8 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Подитог <span>$59</span></li>
-							<li>Эко-сбор <span>$2</span></li>
 							<li>Стоимость доставки <span>Free</span></li>
-							<li>Итого <span>$61</span></li>
+							<li>Итого <span>@Model.TotalPrice</span></li>
 						</ul>
 							<a class="btn btn-default update" href="">Обновить</a>
 							<a class="btn btn-default check_out" href="">Оформить заказ</a>
