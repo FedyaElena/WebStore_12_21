@@ -9,5 +9,5 @@ public class CatalogViewModel
 
     public int? BrandId { get; set; }
 
-    public IEnumerable<ProductViewModel> Products { get; set; } = null!;
+    public IEnumerable<ProductViewModel?> Products { get; set; } = null!;
 }

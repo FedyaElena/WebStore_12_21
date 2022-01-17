@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebStore.Services.InSQL;
 using Microsoft.AspNetCore.Identity;
+using WebStore.Services.InCookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -26,6 +27,7 @@ services.AddTransient<IDbInitializer, DbInitializer>();
 //services.AddSingleton<IProductData, InMemoryProductData>();
 services.AddScoped<IProductData, SQLProductData>();
 services.AddScoped<IEmployeeData, SQLEmployeesData>();
+services.AddScoped<ICartService, InCookiesCartService>();
 
 services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<WebStoreDB>()

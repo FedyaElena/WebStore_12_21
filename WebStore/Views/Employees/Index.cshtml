@@ -1,3 +1,4 @@
+@using WebStore.Domain.Entities.Identity
 @model IEnumerable<WebStore.Domain.Entities.Employee>
 
 @{
@@ -10,7 +11,11 @@
             Сотрудники
         </h3>
 
-        <a class="btn btn-default" asp-action="Edit" >Создать</a>
+    @if (User.IsInRole(Role.Administrators))
+    {
+    <a class="btn btn-default" asp-action="Edit" >Создать</a>
+    }
+
 
     @if (Model.Any())
     {
@@ -24,7 +29,11 @@
                     <th>@Html.DisplayNameFor(m => m.FirstName)</th>
                     <th>@Html.DisplayNameFor(m => m.Patronymic)</th>
                     <th>@Html.DisplayNameFor(m => m.Age)</th>
+                     @if (User.IsInRole(Role.Administrators))
+                    {
                     <th></th>
+                    }
+                    
                 </tr>
             </thead>
             <tbody>
@@ -35,9 +44,13 @@
                             <a asp-action="Details" asp-route-Id="@employee.Id">
                                 <i class="fa fa-info-circle"></i> 
                             </a>
+                            @if (User.IsInRole(Role.Administrators))
+                            {
                             <a asp-action="Edit" asp-route-Id="@employee.Id">
                                 <i class="fa fa-edit"></i> 
                             </a>
+                            }
+                            
                         </td>
                         <td>@employee.Id</td>
                         <td>@employee.LastName</td>
@@ -45,13 +58,16 @@
                         <td>@employee.Patronymic</td>
                         <td>@employee.Age</td>
                         <td>
-
-                            <a asp-action="Delete" asp-route-Id="@employee.Id" class="text-danger">
+                            @if (User.IsInRole(Role.Administrators))
+                            {
+                             <a asp-action="Delete" asp-route-Id="@employee.Id" class="text-danger">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                             <form asp-action="DeleteConfirmed" asp-route-id="@employee.Id">
                                 <input type="submit" value="DD" class="btn btn-sm btn-danger"/>
                             </form>
+                            }
+                           
                         </td>
                     </tr>
                 }
